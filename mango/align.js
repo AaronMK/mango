@@ -5,6 +5,8 @@ export class MangoAlign extends HTMLElement
 		super();
 
 		this._built = false;
+		this._valign = MangoAlign.VNone;
+		this._halign = MangoAlign.HNone;
 	}
 
 	connectedCallback()
@@ -31,99 +33,120 @@ export class MangoAlign extends HTMLElement
 
 			if (this.hasAttribute("top"))
 			{
-				this.Align = MangoAlign.Top;
+				this._valign = MangoAlign.Top;
 			}
 			else if (this.hasAttribute("middle"))
 			{
-				this.Align = MangoAlign.Middle;
+				this._valign = MangoAlign.Middle;
 			}
 			else if (this.hasAttribute("bottom"))
 			{
-				this.Align = MangoAlign.Bottom;
-			}
-			else
-			{
-				this.style.gridTemplateRows = "auto";
-				this._container.style.gridRow = "1";
+				this._valign = MangoAlign.Bottom;
 			}
 
 			/////////////////////////////////
 
 			if (this.hasAttribute("left"))
 			{
-				this.Align = MangoAlign.Left;
+				this._halign = MangoAlign.Left;
 			}
 			else if (this.hasAttribute("center"))
 			{
-				this.Align = MangoAlign.Center;
+				this._halign = MangoAlign.Center;
 			}
 			else if (this.hasAttribute("right"))
 			{
-				this.Align = MangoAlign.Right;
-			}
-			else
-			{
-				this.style.gridTemplateColumns = "auto";
-				this._container.style.gridColumn = "1";
+				this._halign = MangoAlign.Right;
 			}
 
 			this.append(this._container);
-
 			this._built = true;
+
+			this.Alignment = this._valign;
+			this.Alignment = this._halign;
 		}
 	}
 
 	set Alignment(val)
 	{
-		if (val == MangoAlign.Left)
+		if (val >= MangoAlign.HNone && val <= MangoAlign.Right )
 		{
-			this._container.style.gridColumn = "1";
-			this.style.gridTemplateColumns = "auto 1fr";
+			this._halign == val;
 		}
-		else if (val == MangoAlign.Center)
+		else if (val >= MangoAlign.VNone && val <= MangoAlign.Bottom)
 		{
-			this._container.style.gridColumn = "2";
-			this.style.gridTemplateColumns = "1fr auto 1fr";
-		}
-		else if (val == MangoAlign.Right)
-		{
-			this._container.style.gridColumn = "2";
-			this.style.gridTemplateColumns = "1fr auto";
-		}
-		else if (val == MangoAlign.Top)
-		{
-			this._container.style.gridRow = "1";
-			this.style.gridTemplateRows = "auto 1fr";
-		}
-		else if (val == MangoAlign.Middle)
-		{
-			this._container.style.gridRow = "2";
-			this.style.gridTemplateRows = "1fr auto 1fr";
-		}
-		else if (val == MangoAlign.Bottom)
-		{
-			this._container.style.gridRow = "2";
-			this.style.gridTemplateRows = "1fr auto";
+			this._valign = val;
 		}
 		else if (val == MangoAlign.None)
 		{
-			this.style.gridTemplateColumns = "auto";
-			this.style.gridTemplateRows = "auto";
+			this._valign = MangoAlign.VNone;
+			this._halign = MangoAlign.HNone;
+		}
 
-			this._container.style.gridColumn = "1";
-			this._container.style.gridRow = "1";
+		if (this._built)
+		{
+			if (val == MangoAlign.Left)
+			{
+				this._container.style.gridColumn = "1";
+				this.style.gridTemplateColumns = "auto 1fr";
+			}
+			else if (val == MangoAlign.Center)
+			{
+				this._container.style.gridColumn = "2";
+				this.style.gridTemplateColumns = "1fr auto 1fr";
+			}
+			else if (val == MangoAlign.Right)
+			{
+				this._container.style.gridColumn = "2";
+				this.style.gridTemplateColumns = "1fr auto";
+			}
+			else if (val == MangoAlign.HNone)
+			{
+				this._container.style.gridColumn = "1";
+				this.style.gridTemplateColumns = "auto";
+			}
+			else if (val == MangoAlign.Top)
+			{
+				this._container.style.gridRow = "1";
+				this.style.gridTemplateRows = "auto 1fr";
+			}
+			else if (val == MangoAlign.Middle)
+			{
+				this._container.style.gridRow = "2";
+				this.style.gridTemplateRows = "1fr auto 1fr";
+			}
+			else if (val == MangoAlign.Bottom)
+			{
+				this._container.style.gridRow = "2";
+				this.style.gridTemplateRows = "1fr auto";
+			}
+			else if (val == MangoAlign.VNone)
+			{
+				this.style.gridTemplateRows = "auto";
+				this._container.style.gridRow = "1";
+			}
+			else if (val == MangoAlign.None)
+			{
+				this.style.gridTemplateColumns = "auto";
+				this.style.gridTemplateRows = "auto";
+
+				this._container.style.gridColumn = "1";
+				this._container.style.gridRow = "1";
+			}
 		}
 	}
 }
 
 MangoAlign.None = 0;
 
-MangoAlign.Top = 1;
-MangoAlign.Middle = 2;
-MangoAlign.Bottom = 3;
+MangoAlign.VNone = 1;
+MangoAlign.Top = 2;
+MangoAlign.Middle = 3;
+MangoAlign.Bottom = 4;
 
-MangoAlign.Left = 4;
-MangoAlign.Center = 5;
-MangoAlign.Right = 6;
+MangoAlign.HNone = 5;
+MangoAlign.Left = 6
+MangoAlign.Center = 7;
+MangoAlign.Right = 8;
 
 customElements.define('mango-align', MangoAlign);
