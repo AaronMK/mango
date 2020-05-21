@@ -13,11 +13,14 @@ export class MangoAlign extends HTMLElement
 	{
 		if (!this._built)
 		{
+			this.style.pointerEvents = "none";
+
 			let Children = [];
 			for (let i = 0; i < this.childNodes.length; ++i)
 				Children.push(this.childNodes[i]);
 
 			this._container = document.createElement('div');
+			this._container.style.pointerEvents = "auto";
 			this._container.style.height = "auto";
 			this._container.style.minHeight = "min-content";
 			this._container.style.width = "auto";
