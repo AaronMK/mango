@@ -149,12 +149,10 @@ export class MangoRadioGroup
 		this._elements.push(undefined);
 		this._options.push(value);
 
-		let checkedTxt = ""
-
 		if (index == 0)
 			this._selected_index = 0;
 
-		let elmText = `<input is="mango-radio-option" option-index="${index}" name="${this._name}" id="${id}"${checkedTxt}></input>`;
+		let elmText = `<input is="mango-radio-option" option-index="${index}" name="${this._name}" id="${id}"></input>`;
 		return elmText;
 	}
 
