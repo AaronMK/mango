@@ -291,11 +291,6 @@ export class Box
 		};
 	}
 
-	setElementBounds(elm)
-	{
-		
-	}
-
 	/**
 	 * @returns
 	 *  A box representing the part of the document visible within the window.
