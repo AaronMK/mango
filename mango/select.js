@@ -16,7 +16,7 @@ export class MangoSelect extends HTMLElement
 		this._elmSelect.onchange = this._RaiseChangeEvent.bind(this);
 	}
 
-	_RaiseChangeEvent()
+	_RaiseChangeEvent(origEvt)
 	{
 		let currSel = this.Value;
 
@@ -31,6 +31,9 @@ export class MangoSelect extends HTMLElement
 		);
 
 		this.dispatchEvent(event);
+
+		if ( origEvt )
+			origEvt.stopPropagation();
 	}
 
 	connectedCallback()
