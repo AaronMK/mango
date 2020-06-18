@@ -68,14 +68,27 @@ export class MangoSelect extends HTMLElement
 	 * to the select.  The property names will be added as the text for the option
 	 * and the values for the property will be the associated value.
 	 * 
-	 * @param { object } obj
+	 * @param { Object } obj
+	 * 
+	 * @param { Object } options
+	 * 
+	 * @param { bool } options.AutoSpace
+	 *   If true, camel case names attempt to auto space each word for property names
+	 *   for the name listed in the selct box.
 	 */
-	addOptions(obj)
+	addOptions(obj, options)
 	{
 		let names = Object.getOwnPropertyNames(obj);
 
 		for(let i = 0; i < names.length; ++i)
-			this.addOption(names[i], obj[names[i]]);
+		{
+			let selName = names[i];
+			
+			if (options && options.AutoSpace)
+				selName = selName.replace(/([a-z0-9])([A-Z])/g, '$1 $2');
+
+			this.addOption(selName, obj[names[i]]);
+		}
 	}
 
 	/**
